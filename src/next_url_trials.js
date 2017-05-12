@@ -89,7 +89,9 @@ PageZipper.prototype.getTrials = function() { return {
 	'text_size': new PageZipper.prototype.Trial(this,
 		function(nextLink) {
 			//points for larger size per char
-			return Math.floor( (nextLink.link.offsetWidth * nextLink.link.offsetHeight) / nextLink.text.length );
+			var score = Math.floor( (nextLink.link.offsetWidth * nextLink.link.offsetHeight) / nextLink.text.length );
+			if (isNaN(score)) score = 0;
+			return score;
 		}, 10),
 
 	'chars_in_text': new PageZipper.prototype.Trial(this,

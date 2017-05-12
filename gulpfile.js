@@ -13,6 +13,7 @@ const ffext_dir = `ffextension`;
 const chrome_dir = `chrome_ext`;
 const bookmarklet_name = "pagezipper_10.js";
 const ext_name = "pagezipper.js"
+const node_name = "index.js";
 
 var isProd = false
 
@@ -38,7 +39,7 @@ const srcs = {
               ]
 };
 
-function build_pgzp(output_name, loader_file, destLoc, isProd=false, skipJq=false) {
+function build_pgzp(output_name, loader_file, destLoc, isProd=false, skipJq=false, skipLibs=false) {
 
   // prepend 'src/' to filepaths
   ['headers', 'libs', 'pgzp_srcs'].forEach( jsFileArray => {
@@ -48,6 +49,7 @@ function build_pgzp(output_name, loader_file, destLoc, isProd=false, skipJq=fals
   curr_pgzp_srcs.push(loader_file);
 
   if (skipJq) curr_libs.splice(0, 1);
+  if (skipLibs) curr_libs = [];
   var allJsFiles = curr_headers.concat(curr_libs).concat([`${destLoc}/${output_name}`]);
 
   //compile pgzp src files
@@ -73,8 +75,13 @@ function copy_ext_files(ext_dir) {
 }
 
 gulp.task('clean', [], () => {
-  var deleted = del.sync([`${dest}/*`]);
+  var deleted = del.sync([`${dest}/*`, node_name]);
   console.log(`deleted ${deleted.join(', ')}`);
+});
+
+gulp.task('make_node', [], () => {
+  var loader_file = `${src}/loader_node.js`;
+  build_pgzp(node_name, loader_file, '.', false, true, true);
 });
 
 gulp.task('make_bookmarklet', [], () => {
@@ -103,7 +110,7 @@ gulp.task('make_ff_ext', [], () => {
   build_pgzp(ext_name, `${src}/loader_firefox.js`, `${dest}/${ffext_dir}`, false, true);
 });
 
-gulp.task('build', ['clean', 'make_bookmarklet', 'make_chrome_ext', 'make_ff_ext'], () => {
+gulp.task('build', ['clean', 'make_node', 'make_bookmarklet', 'make_chrome_ext', 'make_ff_ext'], () => {
 });
 
 gulp.task('watch', () => {
