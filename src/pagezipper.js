@@ -1,4 +1,4 @@
-function PageZipper() {
+function PageZipper(url) {
 
 	/*------------------ Configuration -------------------*/
 	//TODO add non-english synonyms
@@ -34,6 +34,12 @@ function PageZipper() {
 	this.currDomain;
 	this.url_list;
 	this.media_path;
+
+	if (url) {
+		this.currDomain = this.getDomain(url)
+		this.url_list = [url]
+		this.pages[0] = {url}
+	}
 
 	//loading jQuery here to keep it out of the global scope - required by FF addon reviewers
 	this.jq = jQuery.noConflict(true);
