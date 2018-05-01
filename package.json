@@ -5,14 +5,15 @@
     "levenshtein": "^1.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.14.0",
-    "del": "^2.2.2",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.6.1",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-concat": "^2.6.0",
-    "gulp-if": "^2.0.1",
-    "gulp-uglify": "^2.0.0",
-    "jsdom": "^10.0"
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-uglify": "^3.0.0",
+    "jsdom": "^11.10.0"
   },
   "scripts": {
     "prepare": "gulp build",

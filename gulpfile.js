@@ -55,7 +55,7 @@ function build_pgzp(output_name, loader_file, destLoc, isProd=false, skipJq=fals
   //compile pgzp src files
   gulp.src(curr_pgzp_srcs)
     .pipe(concat(output_name, {newLine: '\n\n'}))
-    .pipe(babel( {presets: ['es2015']} ))
+    .pipe(babel())
     .pipe(gulpIf(isProd, uglify()))
     .pipe(gulp.dest(destLoc))
     .on('end', function() {
