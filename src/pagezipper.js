@@ -47,6 +47,12 @@ function PageZipper(url) {
 	this.trials = this.getTrials();
 }
 
+PageZipper.prototype.addNextLink = function(nextPage) {
+	this.pages[this.pages.length - 1].nextLinkObj = nextPage
+	this.pages.push(nextPage)
+	this.url_list.push(nextPage.url)
+}
+
 
 /*------------------------- Initialize ----------------------*/
 PageZipper.prototype.loadPageZipper = function() {
