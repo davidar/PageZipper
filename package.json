@@ -6,15 +6,15 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
-    "gulp-uglify": "^3.0.0",
-    "jsdom": "^11.10.0",
-    "mocha": "^5.1.1"
+    "gulp-uglify": "^3.0.2",
+    "jsdom": "^11.12.0",
+    "mocha": "^8.0.1"
   },
   "scripts": {
     "prepare": "gulp build",

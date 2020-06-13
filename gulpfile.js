@@ -74,27 +74,31 @@ function copy_ext_files(ext_dir) {
     .pipe(gulp.dest(`${dest}/${ext_dir}`));
 }
 
-gulp.task('clean', [], () => {
+gulp.task('clean', cb => {
   var deleted = del.sync([`${dest}/*`, node_name]);
   console.log(`deleted ${deleted.join(', ')}`);
+  cb();
 });
 
-gulp.task('make_node', [], () => {
+gulp.task('make_node', cb => {
   var loader_file = `${src}/loader_node.js`;
   build_pgzp(node_name, loader_file, '.', false, true, true);
+  cb();
 });
 
-gulp.task('make_bookmarklet', [], () => {
+gulp.task('make_bookmarklet', cb => {
   var loader_file = `${src}/loader_bookmarklet.js`;
   build_pgzp(bookmarklet_name, loader_file, dest, isProd);
+  cb();
 });
 
-gulp.task('make_chrome_ext', [], () => {
+gulp.task('make_chrome_ext', cb => {
   copy_ext_files(chrome_dir);
   build_pgzp(ext_name, `${src}/loader_chrome.js`, `${dest}/${chrome_dir}`, isProd);
+  cb();
 });
 
-gulp.task('make_ff_ext', [], () => {
+gulp.task('make_ff_ext', cb => {
   // jQuery must be included separately for the FF reviewers
   // also the FF reviewers don't want the source to be compressed
   // :(
@@ -108,23 +112,26 @@ gulp.task('make_ff_ext', [], () => {
 
   // no compression for FF, remove jQuery
   build_pgzp(ext_name, `${src}/loader_firefox.js`, `${dest}/${ffext_dir}`, false, true);
+  cb();
 });
 
-gulp.task('build', ['clean', 'make_node', 'make_bookmarklet', 'make_chrome_ext', 'make_ff_ext'], () => {
-});
+gulp.task('build', gulp.series('clean', 'make_node', 'make_bookmarklet', 'make_chrome_ext', 'make_ff_ext'));
 
-gulp.task('watch', () => {
+gulp.task('watch', cb => {
   gulp.watch(['src/**.js', 'src/**.html', 'src/**.css'], ['build']);
+  cb();
 });
 
 // Deploy to prod
-gulp.task('prod', () => {
+gulp.task('prod', cb => {
   isProd = true;
   gulp.start('build');
   console.log("Built Pgzp in production mode");
+  cb();
 });
 
-gulp.task('default', () => {
+gulp.task('default', cb => {
   gulp.start('build');
   console.log("Built Pgzp in development mode");
+  cb();
 });
